@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <cmath>
+#include <string>
 
 using namespace std;
 
@@ -43,31 +44,29 @@ int ReadNumOfQuestion()
     {
         cout << "How Many Question Do You Want To Anser?" << endl;
         cin >> question;
-    } while (question<1||question>10);
+    } while (question < 1 || question > 10);
     return question;
 }
 
 enQuestionLevel ReadQuestionLevel()
 {
     short level;
-
     do
     {
         cout << "\nEnter Question Level [1]Easy , [2]Med , [3]Hard , [4]Mix" << endl;
         cin >> level;
-    } while (level<1||level>4);
+    } while (level < 1 || level > 4);
     return (enQuestionLevel)level;
 }
 
 enOpType ReadOpType()
 {
     short optype;
-
     do
     {
         cout << "\nEnter Opration Type [1]Add , [2]Sub , [3]Mul , [4]Div , [5]Mix" << endl;
         cin >> optype;
-    } while (optype<1||optype>5);
+    } while (optype < 1 || optype > 5);
     return (enOpType)optype;
 }
 
@@ -77,13 +76,10 @@ string GetOpType(enOpType optype)
     {
     case enOpType::add:
         return "+";
-
     case enOpType::sub:
         return "-";
-
     case enOpType::mul:
         return "*";
-
     case enOpType::Div:
         return "/";
     default:
@@ -121,36 +117,29 @@ int SimpleCalculater(int num, int num2, enOpType optype)
     {
     case enOpType::add:
         return num + num2;
-
     case enOpType::sub:
         return num - num2;
-
     case enOpType::mul:
         return num * num2;
-
     case enOpType::Div:
         return num / num2;
-
     default:
         return num + num2;
     }
 }
 
-stQuestion GenerateQuestion(enQuestionLevel level,enOpType optype)
+stQuestion GenerateQuestion(enQuestionLevel level, enOpType optype)
 {
     stQuestion question;
-
     if (level == enQuestionLevel::mix)
     {
         level = (enQuestionLevel)RandomNum(1, 3);
     }
-
     if (optype == enOpType::mixOp)
     {
         optype = GetRandomOpType();
     }
     question.optype = optype;
-
     switch (level)
     {
     case enQuestionLevel::easy:
@@ -159,16 +148,12 @@ stQuestion GenerateQuestion(enQuestionLevel level,enOpType optype)
         question.correctanser = SimpleCalculater(question.num1, question.num2, question.optype);
         question.questionlevel = level;
         return question;
-
-
     case enQuestionLevel::med:
         question.num1 = RandomNum(50, 100);
         question.num2 = RandomNum(50, 100);
         question.correctanser = SimpleCalculater(question.num1, question.num2, question.optype);
         question.questionlevel = level;
         return question;
-
-
     case enQuestionLevel::hard:
         question.num1 = RandomNum(1, 100);
         question.num2 = RandomNum(1, 100);
@@ -200,7 +185,6 @@ void CorrectTheQuestionAnser(stQuizz& quizz, short numquestion)
     {
         quizz.questionlist[numquestion].anserresult = false;
         quizz.numofwronganser++;
-
         cout << "Wrong Anser :-(\n";
         cout << "The Right Anser is: ";
         cout << quizz.questionlist[numquestion].correctanser;
@@ -210,13 +194,12 @@ void CorrectTheQuestionAnser(stQuizz& quizz, short numquestion)
     {
         quizz.questionlist[numquestion].anserresult = true;
         quizz.numofcorrectanser++;
-
         cout << "Right Anser :-)\n";
     }
     SetScreenColor(quizz.questionlist[numquestion].anserresult);
 }
 
-void PrintTheQuestion(stQuizz& quizz,short numquestion)
+void PrintTheQuestion(stQuizz& quizz, short numquestion)
 {
     cout << "\nQuestion [ " << numquestion + 1 << "/" << quizz.numofquestion << "]\n\n";
     cout << quizz.questionlist[numquestion].num1 << endl;
@@ -240,7 +223,7 @@ string GetFinalResult(bool pass)
 {
     if (pass)
     {
-        return "Pass :-)";
+        return "انطر أبلاكش";
     }
     else
     {
@@ -264,7 +247,6 @@ void PrintQuizzResult(stQuizz quizz)
 void PlayGame()
 {
     stQuizz quizz;
-
     quizz.numofquestion = ReadNumOfQuestion();
     quizz.questionlevel = ReadQuestionLevel();
     quizz.optype = ReadOpType();
@@ -282,22 +264,18 @@ void ResetScreen()
 void StartGame()
 {
     char play = 'Y';
-
     do
     {
         ResetScreen();
         PlayGame();
-
         cout << "Do You Want To  Play Again?" << endl;
         cin >> play;
-    } while (play=='Y'||play=='y');
+    } while (play == 'Y' || play == 'y');
 }
 
 int main()
 {
     srand((unsigned)time(NULL));
-
     StartGame();
-
     return 0;
 }
